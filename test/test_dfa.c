@@ -2,7 +2,7 @@
 #include <cgreen/mocks.h>
 #include <string.h>
 
-#include "search/dfa.h"
+#include "algorithms/dfa.h"
 #include "./main.h"
 
 Ensure(test_match)
