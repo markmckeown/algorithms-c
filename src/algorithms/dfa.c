@@ -1,6 +1,6 @@
 #include<stdio.h>
 #include<string.h>
-#include<stdint.h>
+
 
 #define NO_OF_CHARS 256
 
@@ -53,25 +53,33 @@ void computeTF(char *pat, int M, int TF[][NO_OF_CHARS])
 	return;
 }
 
-int search(char *pat, char *txt)
+u_int32_t search(char *pat, char *txt, u_int32_t *offsets, u_int32_t offset_count)
 {
-	int ret = -1;
+	u_int32_t ret = 0;
 	int M = strlen(pat);
 	int N = strlen(txt);
-
 	int TF[M + 1][NO_OF_CHARS];
+	int i, state = 0;
+
+	if (offset_count == 0) {
+		goto out;
+	}
 
 	computeTF(pat, M, TF);
 
-	// Process txt over FA.
-	int i, state = 0;
 	for (i = 0; i < N; i++) {
-		state = TF[state][(uint8_t) txt[i]];
+		state = TF[state][(u_int8_t) txt[i]];
 		if (state == M) {
 			printf("\n Pattern found at index %d", i - M + 1);
-			ret = i - M + 1;
+			*offsets =  i - M + 1;
+			ret++;
+			offsets++;
+			if (ret == offset_count) {
+				break;
+			}
 		}
 	}
 
+out:
 	return ret;
 }
