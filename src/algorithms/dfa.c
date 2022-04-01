@@ -1,11 +1,13 @@
-#include<stdio.h>
-#include<string.h>
+#include <stdio.h>
+#include <string.h>
 
 
 #define NO_OF_CHARS 256
 
 // Based on 
 // https://www.geeksforgeeks.org/finite-automata-algorithm-for-pattern-searching/
+// The link also has a version in Java, implementation is the 
+// same as the C version, however Java char may not be a single byte.
 int getNextState(char *pat, int M, int state, int x)
 {
 	int ret = 0;
