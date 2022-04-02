@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <string.h>
-
+#include <stdint.h>
 
 #define NO_OF_CHARS 256
 
@@ -8,7 +8,7 @@
 // https://www.geeksforgeeks.org/finite-automata-algorithm-for-pattern-searching/
 // The link also has a version in Java, implementation is the 
 // same as the C version, however Java char is 2 bytes so not clear its correct.
-int getNextState(char *pat, int M, int state, int x)
+static int getNextState(char *pat, int M, int state, int x)
 {
 	int ret = 0;
 	// ns stores the result which is next state
@@ -44,7 +44,7 @@ out:
 	return ret;
 }
 
-void computeTF(char *pat, int M, int TF[][NO_OF_CHARS])
+static void computeTF(char *pat, int M, int TF[][NO_OF_CHARS])
 {
 	int state, x;
 	for (state = 0; state <= M; ++state) {
@@ -55,9 +55,9 @@ void computeTF(char *pat, int M, int TF[][NO_OF_CHARS])
 	return;
 }
 
-u_int32_t search(char *pat, char *txt, u_int32_t *offsets, u_int32_t offset_count)
+uint32_t dfa_search(char *txt, char *pat, uint32_t *offsets, uint32_t offset_count)
 {
-	u_int32_t ret = 0;
+	uint32_t ret = 0;
 	int M = strlen(pat);
 	int N = strlen(txt);
 	int TF[M + 1][NO_OF_CHARS];
@@ -70,7 +70,7 @@ u_int32_t search(char *pat, char *txt, u_int32_t *offsets, u_int32_t offset_coun
 	computeTF(pat, M, TF);
 
 	for (i = 0; i < N; i++) {
-		state = TF[state][(u_int8_t) txt[i]];
+		state = TF[state][(uint8_t) txt[i]];
 		if (state == M) {
 			printf("Pattern found at index %d\n", i - M + 1);
 			*offsets =  i - M + 1;

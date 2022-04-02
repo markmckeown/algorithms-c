@@ -3,6 +3,6 @@
 
 #include <stdint.h>
 
-u_int32_t search(char *pat, char *txt, u_int32_t *offsets, u_int32_t offset_count);
+uint32_t dfa_search(char *txt, char *pat, uint32_t *offsets, uint32_t offset_count);
 
 #endif
