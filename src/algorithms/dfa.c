@@ -7,22 +7,22 @@
 // Based on 
 // https://www.geeksforgeeks.org/finite-automata-algorithm-for-pattern-searching/
 // The link also has a version in Java, implementation is the 
-// same as the C version, however Java char may not be a single byte.
+// same as the C version, however Java char is 2 bytes so not clear its correct.
 int getNextState(char *pat, int M, int state, int x)
 {
 	int ret = 0;
+	// ns stores the result which is next state
+	int ns, i;
+
 	// If the character c is same as next character
 	// in pattern,then simply increment state
 	if (state < M && x == pat[state]) {
 		ret = state + 1;
 		goto out;
 	}
-	// ns stores the result which is next state
-	int ns, i;
 
 	// ns finally contains the longest prefix
 	// which is also suffix in "pat[0..state-1]c"
-
 	// Start from the largest possible value
 	// and stop when you find a prefix which
 	// is also suffix
@@ -72,7 +72,7 @@ u_int32_t search(char *pat, char *txt, u_int32_t *offsets, u_int32_t offset_coun
 	for (i = 0; i < N; i++) {
 		state = TF[state][(u_int8_t) txt[i]];
 		if (state == M) {
-			printf("\n Pattern found at index %d", i - M + 1);
+			printf("Pattern found at index %d\n", i - M + 1);
 			*offsets =  i - M + 1;
 			ret++;
 			offsets++;
