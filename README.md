@@ -3,4 +3,5 @@
 **Searching**
 
 - Finite Automata Search, DFA.
+- Rabin Karp
 
